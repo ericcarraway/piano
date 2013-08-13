@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>
+Testing drawing an SVG piano
+</title>
+<script type="text/javascript" src="src/piano.js"></script>
+<script type="text/javascript">
+
+window.onload = function() {
+  var pianoContainer = document.getElementById('piano-container');
+  piano.drawSVGpiano(60, 84, pianoContainer, callback);
+}
+
+var callback = function(event) {
+  var note = event.target.note;
+  alert('You clicked on note: ' + note);
+}
+//callback.eventType = 'click';
+
+</script>
+</head>
+
+<body>
+<div id="piano-container"></div>
+</body>
+
+</html>
