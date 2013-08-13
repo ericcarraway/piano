@@ -12,16 +12,27 @@
 
 var piano = {};
 
-piano.drawSVGpiano = function (startNote, endNote, elem, callback) {
+piano.drawSVGpiano = function (startNote, endNote, elem, callback, scale) {
   this.startNote = startNote;
   this.endNote = endNote;
   this.containerElement = elem;
-  var svg = '',
-      whiteSVG = '',
-      blackSVG = '',
+  this.callback = (arguments.length > 3) ? callback : false;
+  this.scale = (arguments.length > 4) ? scale : 1;
+  this.draw();
+}
+
+piano.draw = function() {
+  this.createSVG();
+  this.containerElement.innerHTML = this.svg;
+  if (this.callback) {
+    this.addEvents(this.callback);
+  }
+}
+
+piano.createSVG = function() {
+  var svg, whiteSVG, blackSVG, t, i,
       s = this.decodeNote(this.startNote),
-      e = this.decodeNote(this.endNote),
-      t, i;
+      e = this.decodeNote(this.endNote);
   for (i = this.startNote; i <= this.endNote; i++) {
     t = this.decodeNote(i);
     if (t.type == 'white') {
@@ -31,11 +42,15 @@ piano.drawSVGpiano = function (startNote, endNote, elem, callback) {
       blackSVG += this.drawPianoKey(i, t.x - s.x, 0, t.type);
     }
   }
-  svg += '<svg width="' + (e.x + 24) + '" height="125">' + whiteSVG + blackSVG + '</svg>';
-  this.containerElement .innerHTML = svg;
-  if (callback) {
-    this.addEvents(callback);
-  }
+  svg = '<svg width="';
+  svg += (e.x + 24) * this.scale;
+  svg += '" height="' + (125 * this.scale) + '">';
+  svg += '<g';
+  svg += ' transform="scale(' + this.scale + ')"';
+  svg += '>';
+  svg += whiteSVG + blackSVG;
+  svg += '</g></svg>';
+  this.svg = svg;
 }
 
 piano.addEvents = function(callback) {

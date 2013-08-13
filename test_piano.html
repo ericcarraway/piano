@@ -10,15 +10,20 @@ Testing drawing an SVG piano
 <script type="text/javascript">
 
 window.onload = function() {
-  var pianoContainer = document.getElementById('piano-container');
-  piano.drawSVGpiano(60, 84, pianoContainer, callback);
+  piano.drawSVGpiano( 
+    48,
+    84,
+    document.getElementById('piano-container'),
+    callback,
+    1.5
+  );
 }
 
 var callback = function(event) {
   var note = event.target.note;
   alert('You clicked on note: ' + note);
 }
-//callback.eventType = 'click';
+callback.eventType = 'click'; //optional. Default is 'click'
 
 </script>
 </head>

@@ -25,7 +25,9 @@ usage
 var firstNote = 60;
 var lastNote = 84;
 var pianoContainer = document.getElementById('piano-container');
-piano.drawSVGpiano(firstNote, lastNote, pianoContainer, callback); //callback is optional
+var scale = 1;
+//callback and scale are optional
+piano.drawSVGpiano(firstNote, lastNote, pianoContainer, callback, scale);
 
 
 3. The optional "callback" argument is a function that will be
@@ -43,4 +45,13 @@ var callback = function(event) {
 define it like this:
 
 callback.eventType = 'mouseover'; //ommiting this, assumes the calling event is a click.
+
+
+5. If you want the piano smaller or bigger you can scale by setting a fifth argument.
+Example:
+piano.drawSVGpiano( 60,
+                    72,
+                    document.getElementById('piano-container'),
+                    function(e){alert('You clicked on note: ' + e.target.note)},
+                    1.5);
 
