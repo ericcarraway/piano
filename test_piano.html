@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <title>
-Testing drawing an SVG piano
+Example drawing an interactive SVG piano
 </title>
 <script type="text/javascript" src="src/piano.js"></script>
 <script type="text/javascript">
@@ -21,7 +21,11 @@ window.onload = function() {
 
 var callback = function(event) {
   var note = event.target.note;
-  alert('You clicked on note: ' + note);
+  var activatedKey = event.target;
+  var oldStyle = activatedKey.getAttribute('style');
+  document.getElementById('show-note-id').innerHTML = 'You clicked on note: ' + note;
+  activatedKey.setAttribute('style', 'fill:red; stroke:black;');
+  window.setTimeout(function(){activatedKey.setAttribute('style', oldStyle)}, 500);
 }
 callback.eventType = 'click'; //optional. Default is 'click'
 
@@ -29,7 +33,10 @@ callback.eventType = 'click'; //optional. Default is 'click'
 </head>
 
 <body>
+<h1>Example drawing an interactive SVG piano
+</h1>
 <div id="piano-container"></div>
+<div id="show-note-id"></div>
 </body>
 
 </html>
