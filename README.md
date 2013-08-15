@@ -4,7 +4,8 @@ piano
 Creates an SVG piano keyboard for inclusion in a web-page,
 where key widths are accurately in position.
 
-This keyboard has following properties (x = octave width):
+This keyboard has following properties:
+- Octave width = 161 pixels = x.
 - All white keys have equal width in front (W = x/7).
 - All black keys have equal width (B = x/12).
 - The narrow part of white keys C, D and E is W - B*2/3

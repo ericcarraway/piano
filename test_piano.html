@@ -17,7 +17,7 @@ window.onload = function() {
     callback,
     1.5
   );
-}
+};
 
 var callback = function(event) {
   var note = event.target.note;
@@ -26,17 +26,27 @@ var callback = function(event) {
   document.getElementById('show-note-id').innerHTML = 'You clicked on note: ' + note;
   activatedKey.setAttribute('style', 'fill:red; stroke:black;');
   window.setTimeout(function(){activatedKey.setAttribute('style', oldStyle)}, 500);
-}
+};
 callback.eventType = 'click'; //optional. Default is 'click'
 
+var drawAnotherPiano = function() {
+  piano2 = Object.create(piano);
+  piano2.containerElement = document.getElementById('another-piano-container');
+  piano2.startNote = 60;
+  piano2.endNote = 72;
+  piano2.callback = function(ev){document.getElementById('show-note-id').innerHTML = 'Your mouse WENT OVER note: ' + ev.target.note;};
+  piano2.callback.eventType = 'mouseover';
+  piano2.draw();
+};
 </script>
 </head>
 
 <body>
-<h1>Example drawing an interactive SVG piano
-</h1>
+<h1>Example drawing an interactive SVG piano</h1>
 <div id="piano-container"></div>
 <div id="show-note-id"></div>
+<input type="button" onclick="drawAnotherPiano();" value="Draw another piano">
+<div id="another-piano-container"></div>
 </body>
 
 </html>

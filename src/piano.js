@@ -1,14 +1,6 @@
-/**
-  Creates a keyboard where key widths are accurately in position.
-
-  See http://www.mathpages.com/home/kmath043.htm for the math.
-
-  This keyboard has following properties (x = octave width):
-  1. All white keys have equal width in front (W = x/7).
-  2. All black keys have equal width (B = x/12).
-  3. The narrow part of white keys C, D and E is W - B*2/3
-  4. The narrow part of white keys F, G, A, and B is W - B*3/4
- */
+/*
+Code by regginos
+*/
 
 var piano = {};
 
@@ -31,15 +23,18 @@ piano.draw = function() {
 
 piano.createSVG = function() {
   var svg, whiteSVG, blackSVG, t, i,
+      noteList = {white: [], black: []},
       s = this.decodeNote(this.startNote),
       e = this.decodeNote(this.endNote);
   for (i = this.startNote; i <= this.endNote; i++) {
     t = this.decodeNote(i);
     if (t.type == 'white') {
       whiteSVG += this.drawPianoKey(i, t.x - s.x, 0, t.type);
+      noteList.white.push(i);
     }
     else if (t.type == 'black') {
       blackSVG += this.drawPianoKey(i, t.x - s.x, 0, t.type);
+      noteList.black.push(i);
     }
   }
   svg = '<svg width="';
@@ -50,6 +45,7 @@ piano.createSVG = function() {
   svg += '>';
   svg += whiteSVG + blackSVG;
   svg += '</g></svg>';
+  this.notelist = noteList.white.concat(noteList.black);
   this.svg = svg;
 }
 
@@ -57,15 +53,15 @@ piano.addEvents = function(callback) {
   if (!callback.eventType) {
     callback.eventType = 'click';
   }
-  for (i = this.startNote; i <= this.endNote; i++) {
-    var el = document.getElementById('piano-' + i);
-    el.note = i;
-    el.addEventListener(callback.eventType, callback, false);
+  var keys = this.containerElement.getElementsByTagName('rect')
+  for (var i = 0; i < keys.length; i++) {
+    keys[i].note = this.notelist[i];
+    keys[i].addEventListener(callback.eventType, callback, false);
   }
 }
 
 piano.drawPianoKey = function (note, x, y, type) {
-  var svg = '<rect id="piano-' + note + '" ';
+  var svg = '<rect ';
   svg += 'style="fill:' + type + ';stroke:black" ';
   svg += 'x="' + x + '" y="' + y + '" ';
   svg += 'width="';
@@ -101,3 +97,12 @@ piano.decodeNote = function (note) {
     type: type,
   };
 }
+/*
+if (typeof Object.create !== 'function') {
+  Object.create = function(o) {
+    var F = function(){};
+    F.prototype = o;
+    return new F();
+  }
+}
+*/
