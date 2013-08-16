@@ -20,7 +20,6 @@ usage
 
         <div id="piano-container"></div>
 
-
 2.  Call the function that creates the piano.
 
         var firstNote = 60; //60 is the  4th octave C (the so-called 'middle C').
@@ -33,7 +32,7 @@ usage
     be defined like this:
 
         var callback = function(event) {
-          var note = event.target.note; //the note on whick the event happened can be accessed like this
+          var note = event.target.note; //the note on which the event happened can be accessed like this
           var element = event.target; //the element that called the event can be accessed like this
           alert('You clicked on note: ' + note); //do something
         }

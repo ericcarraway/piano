@@ -62,7 +62,8 @@ piano.addEvents = function(callback) {
 
 piano.drawPianoKey = function (note, x, y, type) {
   var svg = '<rect ';
-  svg += 'style="fill:' + type + ';stroke:black" ';
+  svg += 'fill="' + type + '" ';
+  svg += 'stroke="black" ';
   svg += 'x="' + x + '" y="' + y + '" ';
   svg += 'width="';
   svg += (type ==  'white') ? '23': '13'; 
@@ -70,6 +71,15 @@ piano.drawPianoKey = function (note, x, y, type) {
   svg += (type ==  'white') ? '120': '80'; 
   svg += '" />';
   return svg;
+}
+
+piano.getKeyByNote = function (note) {
+  var keys = this.containerElement.getElementsByTagName('rect')
+  for (var i = 0; i < keys.length; i++) {
+    if (keys[i].note == note) {
+      return keys[i];
+    }
+  }
 }
 
 piano.decodeNote = function (note) {
@@ -97,7 +107,7 @@ piano.decodeNote = function (note) {
     type: type,
   };
 }
-/*
+
 if (typeof Object.create !== 'function') {
   Object.create = function(o) {
     var F = function(){};
@@ -105,4 +115,3 @@ if (typeof Object.create !== 'function') {
     return new F();
   }
 }
-*/
